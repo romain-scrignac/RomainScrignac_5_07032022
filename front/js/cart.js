@@ -81,10 +81,10 @@ window.addEventListener("load", async () => {
                         let productDescription = `<div class="cart__item__content__description"><h2>${product.name}</h2><p>${productColor}</p><p>${product.price} €</p></div>`
                         let productSettingsQuantity = `<div class="cart__item__content__settings__quantity">
                             <p>Quantité: </p>
-                            <input id="quantity-${productId}" type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${productQuantity}">
+                            <input id="quantity-${productKey}" type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${productQuantity}">
                         </div>`;
                         let productDelete = `<div class="cart__item__content__settings__delete">
-                            <p id="delete-${productId}" class="deleteItem">Supprimer</p>
+                            <p id="delete-${productKey}" class="deleteItem">Supprimer</p>
                         </div>`;
                         let productContentSettings = `<div class="cart__item__content__settings">${productSettingsQuantity + productDelete}</div>`;
                     let productContent = `<div class="cart__item__content">${productDescription + productContentSettings}</div>`;
@@ -100,7 +100,7 @@ window.addEventListener("load", async () => {
                     sumArticle++;
 
                     // event listener pour changer la quantité d'un article
-                    document.getElementById(`quantity-${productId}`).addEventListener('change', event => {
+                    document.getElementById(`quantity-${productKey}`).addEventListener('change', event => {
                         const newQuantity = event.target.value;
                         // Si quantité valide on modifie le panier
                         if((newQuantity > 0) && (newQuantity <= 100) && (newQuantity != productQuantity)) {
@@ -111,7 +111,7 @@ window.addEventListener("load", async () => {
                             };
                             // Mise à jour du tableau products avec la nouvelle quantité du produit
                             products = products.map(product => {
-                                if (product.id === updatedProduct.id) {
+                                if ((product.id === updatedProduct.id) && (productKey === product.id + product.color)){
                                     product.quantity = newQuantity;
                                 }
                                 return product;
@@ -125,7 +125,7 @@ window.addEventListener("load", async () => {
                     });
 
                     // event listener pour supprimer un article
-                    document.getElementById(`delete-${productId}`).addEventListener('click', event => {
+                    document.getElementById(`delete-${productKey}`).addEventListener('click', event => {
                         event.preventDefault();
                         // Suppression de l'article de la page, du tableau products et du local storage
                         article.remove();

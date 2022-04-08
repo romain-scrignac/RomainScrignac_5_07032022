@@ -1,9 +1,10 @@
 /**
- * Fonction qui écrit dans le local storage les données nécessaires pour la commande
- * - productId
- * - productName
- * - productQuantity
- * - productColor
+ * @description this function writes in the local storage the data necessary for the product order
+ * 
+ * @param {string} productId the id of the product
+ * @param {string} productName the name of the product for order alert
+ * @param {number} productQuantity the quantity of the product
+ * @param {string} productColor the color of the product
  */
 function order(productId, productName, productQuantity, productColor) {
 
@@ -22,8 +23,8 @@ function order(productId, productName, productQuantity, productColor) {
     validated = false;
   }
 
-  if (productQuantity <= 0) {
-    alert('Veuillez choisir un nombre d\'article(s)');
+  if ((productQuantity <= 0) || (productQuantity > 100)) {
+    alert('Veuillez choisir un nombre d\'article(s) compris entre 0 et 100');
     validated = false;
   }
 
@@ -41,7 +42,9 @@ function order(productId, productName, productQuantity, productColor) {
   }
 }
 
-// Fonction qui récupère l'id du produit
+/**
+ * @description this function retrieves the product id from url
+ */
 function recupId(){
   const url = new URL(location);
   const productId = url.searchParams.get('id');
