@@ -240,7 +240,7 @@ window.addEventListener("load", async () => {
         validateForm(false, "email");
     });
 
-    // Si panier non vide et formulaire valide on envoie la requête POST
+    // Si panier non vide et formulaire valide on envoi la requête POST
     document.forms[0].addEventListener('submit', async (event) => {
         event.preventDefault();
         if (localStorage.length == 0) {
