@@ -142,7 +142,7 @@ window.addEventListener("load", async () => {
                     });
 
                 } catch (error) {
-                    console.error(err);
+                    console.error(error);
                     alert("Une erreur est survenue, veuillez recharger la page");
                 }
             } else {
@@ -271,8 +271,8 @@ window.addEventListener("load", async () => {
                     const orderId = orderResultJson.orderId;
                     location.href = "confirmation.html?id="+ orderId;
                 }
-            } catch (err) {
-                console.error(err);
+            } catch (error) {
+                console.error(error);
                 alert("Une erreur est survenue, veuillez recharger la page");
             }
         }
