@@ -273,6 +273,7 @@ window.addEventListener("load", async () => {
                     },
                     body: JSON.stringify({contact, products})
                 });
+                // Si la requête POST est valide on récupère l'orderId et on redirige vers confirmation.html
                 if (orderResult.ok) {
                     const orderResultJson = await orderResult.json();
                     const orderId = orderResultJson.orderId;
@@ -280,7 +281,6 @@ window.addEventListener("load", async () => {
                 }
             } catch (error) {
                 console.error(error);
-                alert("Une erreur est survenue, veuillez recharger la page");
             }
         }
     });
