@@ -102,8 +102,12 @@ window.addEventListener("load", async () => {
                     // event listener pour changer la quantité d'un article
                     document.getElementById(`quantity-${productKey}`).addEventListener('change', event => {
                         const newQuantity = event.target.value;
+                        // Si quantité non valide on averti l'utilisateur
+                        if ((newQuantity <= 0) || (newQuantity > 100)) {
+                            alert('Veuillez choisir un nombre d\'article(s) compris entre 0 et 100');
+                        }
                         // Si quantité valide on modifie le panier
-                        if((newQuantity > 0) && (newQuantity <= 100) && (newQuantity != productQuantity)) {
+                        if((newQuantity > 0) && (newQuantity <= 100)) {
                             const updatedProduct = {
                                 id: productId,
                                 color: productColor,
@@ -111,9 +115,10 @@ window.addEventListener("load", async () => {
                             };
                             // Mise à jour du tableau products avec la nouvelle quantité du produit
                             products = products.map(product => {
-                                if ((product.id === updatedProduct.id) && (productKey === product.id + product.color)){
+                                if (productKey === product.id + product.color) {
                                     product.quantity = newQuantity;
                                 }
+                                console.log(product.id + product.color);
                                 return product;
                             });
                             // Mise à jour du local storage et calcul du nouveau prix total
@@ -130,8 +135,10 @@ window.addEventListener("load", async () => {
                         // Suppression de l'article de la page, du tableau products et du local storage
                         article.remove();
                         localStorage.removeItem(productKey);
-                        products = products.filter(product => product.id != cartProduct.id);
+                        // Suppression de l'article du tableau products si la clé correspond bien à l'article
+                        products = products.filter(product => (product.id + product.color) != productKey);
                         alert("Produit supprimé du panier");
+                        console.log(products);
         
                         // Modification quantité d'articles
                         sumArticle--;
