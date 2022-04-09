@@ -222,7 +222,6 @@ window.addEventListener("load", async () => {
 
                 } catch (error) {
                     console.error(error);
-                    alert("Une erreur est survenue, veuillez recharger la page");
                 }
             } else {
                 console.log("Erreur de clé");

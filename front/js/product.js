@@ -107,6 +107,5 @@ window.addEventListener("load", async () => {
 
   } catch (error) {
     console.error(error);
-    alert("Une erreur est survenue, veuillez recharger la page");
   }
 });
