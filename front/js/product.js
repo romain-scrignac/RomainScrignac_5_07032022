@@ -70,17 +70,20 @@ window.addEventListener("load", async () => {
     console.log(colors);
 
     // Affichage infos produit
+    const img = document.createElement("img");
     const parentImg = document.getElementById('item__img');
-    parentImg.innerHTML = '<img src='+ imageUrl +' alt='+ altTxt +' />';
+    parentImg.appendChild(img);
+    img.setAttribute("src", imageUrl);
+    img.setAttribute("alt", altTxt);
 
     const parentName = document.getElementById('title');
-    parentName.innerHTML = productName;
+    parentName.innerText = productName;
 
     const parentPrice = document.getElementById('price');
-    parentPrice.innerHTML = price;
+    parentPrice.innerText = price;
 
     const parentDescription = document.getElementById('description');
-    parentDescription.innerHTML = description;
+    parentDescription.innerText = description;
 
     const parentColorOption = document.getElementById('colors');
 
@@ -91,7 +94,7 @@ window.addEventListener("load", async () => {
       let colorOption = document.createElement('option');
       parentColorOption.appendChild(colorOption);
       colorOption.setAttribute('value', colors[i]);
-      colorOption.innerHTML = colors[i];
+      colorOption.innerText = colors[i];
     }
 
     // Création évènement au clic sur bouton de commande

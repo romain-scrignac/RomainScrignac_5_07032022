@@ -6,24 +6,40 @@ window.addEventListener("load", async () => {
 
     // Boucle qui crée un lien différent pour chaque produit
     for (let product of products) {
-
-      // Création + ajout de l'élément "enfant" newLink <a> au parent <section id="items">
-      let newLink = document.createElement("a");
-      let parentLink = document.getElementById("items");
-  
+      
+      // Création du lien
+      const newLink = document.createElement("a");
+      const parentLink = document.getElementById("items");
       parentLink.appendChild(newLink);
-  
-      // Création variables pour les balises contenues dans l'élément newlink <a>
-      let imageKanap = `<img src="${product.imageUrl}" alt="${product.altTxt}"/>`
-      let nameKanap = '<h3 class="productName">'+ product.name +'</h3>';
-      let descriptionKanap = '<p class="productDescription">'+ product.description +'</p>';
-  
-      // Modification de l'attribut newlink <a>
       newLink.setAttribute("href", "./product.html?id="+ product._id);
-  
-      // Modification du contenu de l'élément newlink <a> avec les variables créées précédemment
-      newLink.innerHTML = '<article>'+ imageKanap + nameKanap + descriptionKanap +'</article>';
+      newLink.setAttribute("id", "link-"+ product._id);
 
+      // Création de l'article
+      const newArticle = document.createElement("article");
+      const parentNewArticle = document.getElementById("link-"+ product._id);
+      parentNewArticle.appendChild(newArticle);
+      newArticle.setAttribute("id", "article-"+ product._id);
+
+      // Création de l'image
+      const imageKanap = document.createElement("img");
+      const parentImageKanap = document.getElementById("article-"+ product._id);
+      parentImageKanap.appendChild(imageKanap);
+      imageKanap.setAttribute("src", product.imageUrl);
+      imageKanap.setAttribute("alt", product.altTxt);
+
+      // Création du titre
+      const nameKanap = document.createElement("h3");
+      const parentNameKanap = document.getElementById("article-"+ product._id);
+      parentNameKanap.appendChild(nameKanap);
+      nameKanap.setAttribute("class", "productName");
+      nameKanap.innerText = product.name;
+
+      // Création de la description
+      const descriptionKanap = document.createElement("p");
+      const parentDescriptionKanap = document.getElementById("article-"+ product._id);
+      parentDescriptionKanap.appendChild(descriptionKanap);
+      descriptionKanap.setAttribute("class", "productDescription");
+      descriptionKanap.innerText = product.description;
     }
   } catch (error) {
     console.error(error);

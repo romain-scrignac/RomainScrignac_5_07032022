@@ -65,32 +65,104 @@ window.addEventListener("load", async () => {
                     const productsAPICall = await fetch('http://localhost:3000/api/products/'+ productId);
                     const product = await productsAPICall.json();
 
-                    // Création + ajout de l'élément enfant <article> au parent <section id="cart__items">
-                    let article = document.createElement("article");
-                    let parentArticle = document.getElementById("cart__items");
-
+                    // Création de l'article
+                    const article = document.createElement("article");
+                    const parentArticle = document.getElementById("cart__items");
                     parentArticle.appendChild(article);
-
-                    // Modification des attributs <article>
                     article.setAttribute("class", "cart__item");
-                    article.setAttribute("data-id", product._id);
+                    article.setAttribute("id", "item-"+ productKey);
+                    article.setAttribute("data-id", productId);
                     article.setAttribute("data-color", productColor);
 
-                    // Création variables pour les balises contenues dans l'élément <article>
-                    let productImage = `<div class="cart__item__img"><img src="${product.imageUrl}" alt="${product.altTxt}"></div>`;
-                        let productDescription = `<div class="cart__item__content__description"><h2>${product.name}</h2><p>${productColor}</p><p>${product.price} €</p></div>`
-                        let productSettingsQuantity = `<div class="cart__item__content__settings__quantity">
-                            <p>Quantité: </p>
-                            <input id="quantity-${productKey}" type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${productQuantity}">
-                        </div>`;
-                        let productDelete = `<div class="cart__item__content__settings__delete">
-                            <p id="delete-${productKey}" class="deleteItem">Supprimer</p>
-                        </div>`;
-                        let productContentSettings = `<div class="cart__item__content__settings">${productSettingsQuantity + productDelete}</div>`;
-                    let productContent = `<div class="cart__item__content">${productDescription + productContentSettings}</div>`;
+                    // Création du conteneur cart__item__img
+                    const productImage = document.createElement("div");
+                    const parentProductImage = document.getElementById("item-"+ productKey);
+                    parentProductImage.appendChild(productImage);
+                    productImage.setAttribute("class", "cart__item__img");
+                    productImage.setAttribute("id", "img-"+ productKey);
 
-                    // Modification du contenu de l'élément article
-                    article.innerHTML = productImage + productContent;
+                    // Création de la balise image
+                    const imageKanap = document.createElement("img");
+                    const parentImageKanap = document.getElementById("img-"+ productKey);
+                    parentImageKanap.appendChild(imageKanap);
+                    imageKanap.setAttribute("src", product.imageUrl);
+                    imageKanap.setAttribute("alt", product.altTxt);
+
+                    // Création du conteneur cart__item__content
+                    const itemContent = document.createElement("div");
+                    const parentItemContent = document.getElementById("item-"+ productKey);
+                    parentItemContent.appendChild(itemContent);
+                    itemContent.setAttribute("class", "cart__item__content");
+                    itemContent.setAttribute("id", "content-"+ productKey);
+
+                    // Création du conteneur cart__item__content__description
+                    const itemContentDescription = document.createElement("div");
+                    const parentItemContentDescription = document.getElementById("content-"+ productKey);
+                    parentItemContentDescription.appendChild(itemContentDescription);
+                    itemContentDescription.setAttribute("class", "cart__item__content__description");
+                    itemContentDescription.setAttribute("id", "content__description-"+ productKey);
+
+                    // Création de la description
+                    const nameKanap = document.createElement("h2");
+                    const parentNameKanap = document.getElementById("content__description-"+ productKey);
+                    parentNameKanap.appendChild(nameKanap);
+                    nameKanap.innerText = product.name;
+
+                    const colorKanap = document.createElement("p");
+                    const parentColorKanap = document.getElementById("content__description-"+ productKey);
+                    parentColorKanap.appendChild(colorKanap);
+                    colorKanap.innerText = productColor;
+
+                    const priceKanap =  document.createElement("p");
+                    const parentPriceKanap = document.getElementById("content__description-"+ productKey);
+                    parentPriceKanap.appendChild(priceKanap);
+                    priceKanap.innerText = product.price +" €";
+
+                    // Création du conteneur cart__item__content__settings
+                    const itemContentSettings = document.createElement("div");
+                    const parentItemContentSettings = document.getElementById("content-"+ productKey);
+                    parentItemContentSettings.appendChild(itemContentSettings);
+                    itemContentSettings.setAttribute("class", "cart__item__content__settings");
+                    itemContentSettings.setAttribute("id", "content__settings-"+ productKey);
+
+                    // Création du conteneur cart__item__content__settings__quantity
+                    const itemSettingsQuantity = document.createElement("div");
+                    const parentItemSettingsQuantity = document.getElementById("content__settings-"+ productKey);
+                    parentItemSettingsQuantity.appendChild(itemSettingsQuantity);
+                    itemSettingsQuantity.setAttribute("class", "cart__item__content__settings__quantity");
+                    itemSettingsQuantity.setAttribute("id", "item__settings__quantity-"+ productKey);
+
+                    // Création de la quantité avec input pour la modifier
+                    const quantityKanap = document.createElement("p");
+                    const parentQuantityKanap = document.getElementById("item__settings__quantity-"+ productKey);
+                    parentQuantityKanap.appendChild(quantityKanap);
+                    quantityKanap.innerText = "Quantité : ";
+
+                    const settingsQuantityKanap = document.createElement("input");
+                    const parentSettingsQuantityKanap = document.getElementById("item__settings__quantity-"+ productKey);
+                    parentSettingsQuantityKanap.appendChild(settingsQuantityKanap);
+                    settingsQuantityKanap.setAttribute("type", "number");
+                    settingsQuantityKanap.setAttribute("class", "itemQuantity");
+                    settingsQuantityKanap.setAttribute("id", "quantity-"+ productKey);      // Cet id servira à modifier la quantité avec l'eventListener "change"
+                    settingsQuantityKanap.setAttribute("name", "itemQuantity");
+                    settingsQuantityKanap.setAttribute("min", "1");
+                    settingsQuantityKanap.setAttribute("max", "100");
+                    settingsQuantityKanap.setAttribute("value", productQuantity);
+
+                    // Création du conteneur cart__item__content__settings__delete
+                    const itemSettingsDelete = document.createElement("div");
+                    const parentItemSettingsDelete = document.getElementById("content__settings-"+ productKey);
+                    parentItemSettingsDelete.appendChild(itemSettingsDelete);
+                    itemSettingsDelete.setAttribute("class", "cart__item__content__settings__delete");
+                    itemSettingsDelete.setAttribute("id", "item__settings__delete-"+ productKey);
+
+                    // Création de l'option de suppression
+                    const deleteKanap = document.createElement("p");
+                    const parentDeleteKanap = document.getElementById("item__settings__delete-"+ productKey);
+                    parentDeleteKanap.appendChild(deleteKanap);
+                    deleteKanap.setAttribute("class", "deleteItem");
+                    deleteKanap.setAttribute("id", "delete-"+ productKey);                  // Cet id servira à supprimer l'article avec l'eventListener "click"
+                    deleteKanap.innerText = "Supprimer";
 
                     // Ajout du prix du produit au tableau products pour le calcul total
                     cartProduct.price = product.price;
