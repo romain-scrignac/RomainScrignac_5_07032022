@@ -18,6 +18,21 @@ function calculateTotalPrice(totalPriceId, products) {
 };
 
 /**
+ * @description this function calculates the total number of products,
+ *              then updates inner text of passed id
+ * @param {string} totalQuantityId the id of the element which has its display updated
+ */
+function calculateTotalProducts(totalQuantityId) {
+    let sumArticle = 0;
+    for(let i = 0; i < localStorage.length; i++) {
+        const cartProduct = getProductFromLocalStorage(i);
+        const quantityProduct = cartProduct.quantity;
+        sumArticle += parseInt(quantityProduct);
+    }
+    document.getElementById(totalQuantityId).innerText = sumArticle;
+}
+
+/**
  * @description this function takes a key as parameter to return the associated product from local storage
  * 
  * @param {string} key the id of the product in local storage
@@ -29,14 +44,14 @@ function getProductFromLocalStorage(key) {
 }
 
 const totalPriceId = "totalPrice";
+const totalQuantityId = "totalQuantity";
 
 // Création regex pour vérification du formulaire
 const regexName = /^([À-ÿA-Za-z]{1,30})([\s|'|-]{1}[À-ÿA-Za-z]{1,30}){0,5}?$/;
 const regexAddress = /^([0-9]{1,4})\s([À-ÿA-Za-z]{2,10})\s([À-ÿA-Za-z0-9]{1,})([\s|'|-]{1}[À-ÿA-Za-z0-9]{1,}){0,9}?$/;
 const regexEmail = /^([a-z0-9]{1,20})([\.|_|-]{1}[a-z0-9]{1,20})?@{1}([a-z0-9]{2,15})\.[a-z]{2,4}$/;
 
-// Initialisation du nombre d'articles à 0 et du tableau des produits vide
-let sumArticle = 0;
+// Initialisation du tableau des produits vide
 let products = [];
 
 window.addEventListener("load", async () => {
@@ -168,9 +183,6 @@ window.addEventListener("load", async () => {
                     cartProduct.price = product.price;
                     products.push(cartProduct);
 
-                    // Ajout d'un article à chaque loop pour le nombre total
-                    sumArticle++;
-
                     // event listener pour changer la quantité d'un article
                     document.getElementById(`quantity-${productKey}`).addEventListener('change', event => {
                         const newQuantity = event.target.value;
@@ -193,8 +205,9 @@ window.addEventListener("load", async () => {
                                 console.log(product.id + product.color);
                                 return product;
                             });
-                            // Mise à jour du local storage et calcul du nouveau prix total
+                            // Mise à jour du local storage et modification nombre total d'articles + prix total
                             localStorage.setItem(productKey, JSON.stringify(updatedProduct));
+                            calculateTotalProducts(totalQuantityId);
                             calculateTotalPrice(totalPriceId, products);
 
                             console.log(products);
@@ -212,11 +225,8 @@ window.addEventListener("load", async () => {
                         alert("Produit supprimé du panier");
                         console.log(products);
         
-                        // Modification quantité d'articles
-                        sumArticle--;
-                        totalQuantityId.innerText = sumArticle;
-        
-                        // Calcul du nouveau prix total                        
+                        // Modification nombre total d'articles + prix total
+                        calculateTotalProducts(totalQuantityId);
                         calculateTotalPrice(totalPriceId, products);
                     });
 
@@ -229,9 +239,8 @@ window.addEventListener("load", async () => {
         }
     }
 
-    // Affichage nombre d'articles et prix total
-    let totalQuantityId = document.getElementById("totalQuantity");
-    totalQuantityId.innerText = sumArticle;
+    // Affichage nombre total d'articles + prix total
+    calculateTotalProducts(totalQuantityId);
     calculateTotalPrice(totalPriceId, products);
 
     let firstName = document.forms[0]["firstName"];
