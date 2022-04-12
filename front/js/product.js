@@ -1,5 +1,6 @@
 /**
- * @description this function writes in the local storage the data necessary for the product order
+ * @description this function checks the data needed to order the product,
+ *              before writing it in the local storage
  * 
  * @param {string} productId the id of the product
  * @param {string} productName the name of the product for order alert
@@ -43,7 +44,7 @@ function order(productId, productName, productQuantity, productColor) {
  */
 function checkProduct(keyOrder, productId, productColor, productQuantity, productName) {
   const cartProduct = JSON.parse(localStorage.getItem(keyOrder));
-  if(cartProduct == null) {
+  if(cartProduct === null) {
     // Ajout du produit au panier
     localStorage.setItem(keyOrder, JSON.stringify({
       id: productId,
