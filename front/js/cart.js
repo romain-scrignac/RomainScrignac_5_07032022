@@ -291,7 +291,7 @@ window.addEventListener("load", async () => {
     };
 
     // Event listener pour vérifier chaque input en direct
-    firstName.addEventListener('blur', event => {
+    firstName.addEventListener('change', event => {
         validateForm(false, "firstName");
     });
 
