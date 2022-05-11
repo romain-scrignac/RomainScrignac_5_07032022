@@ -1,2 +1,2 @@
 # RomainScrignac_5_07032022
-Création d'un site web d'e-commerce "Kanap" en javascript (partie front-end)
+Projet 5 de la formation dev web - Construire un site d'e-commerce (Javascript)
